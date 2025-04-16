@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/employee.dart';
 import 'checkin_checkout_screen.dart';
+import '../login_screen.dart'; //
 
 class EmployeeDashboard extends StatelessWidget {
   final Employee employee;
@@ -9,7 +10,22 @@ class EmployeeDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Employee Dashboard')),
+      appBar: AppBar(
+        title: Text('Employee Dashboard'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+                (route) => false,
+              );
+            },
+            tooltip: 'Logout',
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

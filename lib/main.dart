@@ -14,6 +14,7 @@ class AttendanceApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       home: LoginScreen(),
     );
   }

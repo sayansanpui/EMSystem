@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../providers/attendance_provider.dart';
 import '../../widgets/attendance_request_tile.dart';
+import '../login_screen.dart';
 
 class ApproveRequestsScreen extends StatefulWidget {
   @override
@@ -15,7 +16,22 @@ class _ApproveRequestsScreenState extends State<ApproveRequestsScreen> {
     final pendingRequests = provider.getPendingRequests();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Pending Attendance Requests')),
+      appBar: AppBar(
+        title: Text('Pending Attendance Requests'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+                (route) => false,
+              );
+            },
+            tooltip: 'Logout',
+          ),
+        ],
+      ),
       body: pendingRequests.isEmpty
           ? Center(child: Text('No pending requests'))
           : ListView.builder(

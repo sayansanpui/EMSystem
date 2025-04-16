@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/employee.dart';
 import '../../providers/employee_provider.dart';
+import '../login_screen.dart';
 
 class CreateEmployeeScreen extends StatefulWidget {
   @override
@@ -35,7 +36,22 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Employee')),
+      appBar: AppBar(
+        title: Text('Create Employee'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+                (route) => false,
+              );
+            },
+            tooltip: 'Logout',
+          ),
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -45,8 +61,7 @@ class _CreateEmployeeScreenState extends State<CreateEmployeeScreen> {
               TextFormField(
                 controller: _idController,
                 decoration: InputDecoration(labelText: 'Employee ID'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter ID' : null,
+                validator: (value) => value!.isEmpty ? 'Please enter ID' : null,
               ),
               TextFormField(
                 controller: _nameController,

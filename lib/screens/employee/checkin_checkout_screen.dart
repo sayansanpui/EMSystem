@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../providers/attendance_provider.dart';
 import '../../models/attendance_request.dart';
+import '../login_screen.dart';
 
 class CheckInCheckOutScreen extends StatefulWidget {
   final String employeeId;
@@ -22,7 +23,8 @@ class _CheckInCheckOutScreenState extends State<CheckInCheckOutScreen> {
       attendanceProvider.addRequest(
         AttendanceRequest(
           employeeId: widget.employeeId,
-          employeeName: widget.employeeId, // Replace with employee name if needed
+          employeeName:
+              widget.employeeId, // Replace with employee name if needed
           checkIn: checkInTime!,
         ),
       );
@@ -35,7 +37,8 @@ class _CheckInCheckOutScreenState extends State<CheckInCheckOutScreen> {
     setState(() {
       checkOutTime = DateTime.now();
       // Find the latest pending request for this employee
-      final requests = attendanceProvider.getRequestsByEmployee(widget.employeeId);
+      final requests =
+          attendanceProvider.getRequestsByEmployee(widget.employeeId);
       if (requests.isNotEmpty) {
         final lastRequest = requests.last;
         lastRequest.checkOut = checkOutTime;
@@ -48,7 +51,22 @@ class _CheckInCheckOutScreenState extends State<CheckInCheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Check-in / Check-out')),
+      appBar: AppBar(
+        title: Text('Check-in / Check-out'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+                (route) => false,
+              );
+            },
+            tooltip: 'Logout',
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +77,9 @@ class _CheckInCheckOutScreenState extends State<CheckInCheckOutScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: (checkInTime != null && checkOutTime == null) ? _checkOut : null,
+              onPressed: (checkInTime != null && checkOutTime == null)
+                  ? _checkOut
+                  : null,
               child: Text('Check-out'),
             ),
             SizedBox(height: 40),
