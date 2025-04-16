@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import '../../providers/employee_provider.dart';
+import '../../widgets/employee_tile.dart';
+
+class EmployeeListScreen extends StatelessWidget {
+  final EmployeeProvider employeeProvider = EmployeeProvider();
+
+  @override
+  Widget build(BuildContext context) {
+    final employees = employeeProvider.employees;
+    return Scaffold(
+      appBar: AppBar(title: Text('All Employees')),
+      body: ListView.builder(
+        itemCount: employees.length,
+        itemBuilder: (context, index) {
+          final emp = employees[index];
+          return ListTile(
+            leading: Icon(Icons.person),
+            title: Text('${emp.name} (${emp.id})'),
+            subtitle: Text('Password: ${emp.password}'),
+            // Optionally, add edit/delete buttons here
+          );
+        },
+      ),
+    );
+  }
+}
